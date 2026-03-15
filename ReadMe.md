@@ -7,10 +7,57 @@ filtering, searching.
 
 To setup the project:
 
-clone project
+# Django Course Management API
 
-create virtual env: -python -m venv venv
+A Django REST API for managing courses, teachers, students and enrollments.
 
-install all requirements: - pip install -r > requirements.txt
+## Features
 
-run server: -python manage.py runserver
+- Course management
+- Student enrollment
+- Teacher assignment
+- Pagination for API responses
+
+## Tech Stack
+
+- Python
+- Django
+- Django REST Framework
+- SQLite (development)
+
+## Installation
+
+Clone the repository:
+
+git clone https://github.com/username/django-course-management.git
+
+Create virtual environment:
+
+python -m venv venv
+
+Activate it:
+
+venv\Scripts\activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+Run migrations:
+
+python manage.py migrate
+
+Run server:
+
+python manage.py runserver
+
+## API Endpoints
+
+- `/courses/`
+- `/students/`
+- `/teachers/`
+- `/enrollments/`
+
+## Author
+
+Eriseld Fili
