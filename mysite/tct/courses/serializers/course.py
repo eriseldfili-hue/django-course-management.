@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Course
-from .models import Teacher
+
 from tct.teacher.serializers import TeacherSerializer
 from tct.student.serializers import StudentSerializer
 
@@ -35,17 +34,6 @@ class CourseCreateSerializer(serializers.ModelSerializer):
               "Starting date must be before ending date."
           )
       return data
-
-
-  def create(self, validated_data):
-      teacher = Teacher.objects.get(
-          id=validated_data.get("teacher_id")
-      )
-      if not teacher:
-          raise serializers.ValidationError("Teacher not found!!")
-      return Course.objects.create(
-          **validated_data
-      )
 
 
 class CourseUpdateSerializer(serializers.ModelSerializer):

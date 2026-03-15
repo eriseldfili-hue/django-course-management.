@@ -4,9 +4,9 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 
-from tct.courses.data_service import CourseService
-from tct.courses.models import Course
-from tct.courses.serializers import CourseReadSerializer, CourseUpdateSerializer, CourseCreateSerializer
+from tct.courses.data_service.course import CourseService
+from tct.courses.models.course import Course
+from tct.courses.serializers.course import CourseReadSerializer, CourseUpdateSerializer, CourseCreateSerializer
 from tct.pagination import TCTPagination
 from tct.utils import enroll_student, unroll_student
 
@@ -198,3 +198,42 @@ class CourseBulkImportView(APIView):
        #     )
        #     return response
        return Response(report)
+   
+class CourseCreateBulkView(APIView):
+    
+    def post(self, request):
+        
+        course_id = request.data.get("course_id")
+        student_ids = request.data.get("student_ids")
+        
+        if not course_id:
+            return Response(
+                {"error": "Course ID is required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        if not student_ids or not isinstance(student_ids, list):
+            return Response(
+                {"error": "student_ids must be a list !!"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        course = get_object_or_404(Course, pk=course_id)
+        
+        enrolled_students = enroll_student(
+            course=course,
+            student_ids=student_ids
+        )
+        return Response(
+            {
+                "message": "Successfully enrolled students!!",
+                "enrolled_students": enrolled_students
+            },
+            status=status.HTTP_200_OK
+        )
+
+
+class CourseEnrollBulkView:
+    @classmethod
+    def as_view(cls):
+        pass
