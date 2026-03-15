@@ -36,19 +36,19 @@ def enroll_student(course, student_ids):
 
 
 @transaction.atomic
-def unroll_student(course, student_ids):
+def unenroll_student(course, student_ids):
     """
     Remove students from a course
     """
 
     # students requested for removal
-    students_to_unroll = Student.objects.filter(id__in=student_ids)
+    students_to_unenroll = Student.objects.filter(id__in=student_ids)
 
     # students currently enrolled
     enrolled_ids = course.student.values_list("id", flat=True)
 
     # only remove those actually enrolled
-    students_to_remove = students_to_unroll.filter(id__in=enrolled_ids)
+    students_to_remove = students_to_unenroll.filter(id__in=enrolled_ids)
 
     if not students_to_remove.exists():
         raise ValidationError(

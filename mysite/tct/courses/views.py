@@ -8,7 +8,7 @@ from tct.courses.data_service.course import CourseService
 from tct.courses.models.course import Course
 from tct.courses.serializers.course import CourseReadSerializer, CourseUpdateSerializer, CourseCreateSerializer
 from tct.pagination import TCTPagination
-from tct.utils import enroll_student, unroll_student
+from tct.utils import enroll_student, unenroll_student
 
 
 class CourseListView(APIView):
@@ -22,7 +22,6 @@ class CourseListFilteredView(APIView):
    # check if is authenticated
    def get(self, request):
        courses = Course.objects.all()
-
 
        teacher = request.query_params.get("teacher")
        print(teacher, 'TEACHER VALUE')
@@ -161,7 +160,7 @@ class CourseUnrollView(APIView):
            )
 
 
-       enrolled_students = unroll_student(
+       enrolled_students = unenroll_student(
            course=course,
            student_ids=student_ids
        )
