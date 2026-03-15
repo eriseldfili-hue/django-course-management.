@@ -8,5 +8,7 @@ db.sqlite3
 venv/
 .env.*
 .DS_Store
+Thumbs.db
 media/
 staticfiles/
+.idea
